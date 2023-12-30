@@ -29,17 +29,6 @@ class Post(Base):
     pictures = relationship("Picture")
     comments = relationship("Comment")
 
-class TimeLine(Base):
-    __tablename__ = 'update'
-    id = Column(Integer, primary_key=True)
-    date = Column(String(250))
-    viewer = Column(String(250))
-    reaction = Column(String(250), nullable=False)
-    description = Column(String(250), ForeignKey('user.id'))
-    pictures = relationship("Picture", backref="update")
-    comments = relationship("Comment")
-
-
 class Message(Base):
     __tablename__ = 'message'
     id = Column(Integer, primary_key=True)
@@ -51,10 +40,11 @@ class Message(Base):
 class Followers(Base):
     __tablename__ = 'followers'
     id = Column(Integer, primary_key=True)
-    followers_id = Column(String(250))
-    following_id = Column(String(250))
-    post_id = Column(Integer, ForeignKey('post.id'))
-    update_id = Column(Integer, ForeignKey('update.id'))
+    followers_id = Column(Integer,ForeignKey("user.id"))
+    following_id = Column(Integer,ForeignKey("user.id"))
+    user_1 = relationship("User")
+    
+
 
 class Comment(Base):
     __tablename__ = 'comment'
@@ -63,7 +53,7 @@ class Comment(Base):
     like = Column(Boolean)
     date = Column(String(250), nullable=False)
     post_id = Column(Integer, ForeignKey('post.id'))
-    update_id = Column(Integer, ForeignKey('update.id'))
+    user_id = Column(Integer, ForeignKey('user.id'))
 
 
     def to_dict(self):

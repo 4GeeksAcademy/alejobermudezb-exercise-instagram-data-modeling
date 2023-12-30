@@ -29,7 +29,7 @@ class Post(Base):
     pictures = relationship("Picture")
     comments = relationship("Comment")
 
-class Update(Base):
+class TimeLine(Base):
     __tablename__ = 'update'
     id = Column(Integer, primary_key=True)
     date = Column(String(250))
